@@ -104,6 +104,22 @@ class CalculatorTest {
 
         assertEquals(expected, actual);
     }
+    @Test
+    @DisplayName("soll 'Error' anzeigen, wenn ein negativer Wert durch Null geteilt wird")
+    void testNegativeDivisionByZero() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(5);// 5 eingeben
+        calc.pressNegativeKey(); // 5- eingeben
+        calc.pressBinaryOperationKey("/");// geteilt
+        calc.pressDigitKey(0); // geteilt 0
+        calc.pressEqualsKey(); // ergebnis berechnen
+
+        String expected = "Error"; //zeigt error an
+        String actual = calc.readScreen(); //commit 2
+
+        assertEquals(expected, actual);
+    }
 
 }
 
