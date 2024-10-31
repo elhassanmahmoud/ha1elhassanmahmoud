@@ -116,7 +116,7 @@ class CalculatorTest {
         calc.pressEqualsKey(); // ergebnis berechnen
 
         String expected = "Error"; //zeigt error an
-        String actual = calc.readScreen(); //commit 2 - 1/2 --
+        String actual = calc.readScreen(); //commit 2 - 1/2 -
 
         assertEquals(expected, actual);
     }
