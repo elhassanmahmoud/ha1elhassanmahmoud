@@ -90,6 +90,20 @@ class CalculatorTest {
 
 
     //TODO hier weitere Tests erstellen
+    @Test
+    @DisplayName("soll den Bildschirm auf 0 zurücksetzen, wenn die Clear-Taste = 0 gedrückt wird")
+    void testClearScreen() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(1);//1 eingeben
+        calc.pressDigitKey(6);//6 eingeben und dann clear taste drücken
+        calc.pressClearKey();// clear taste drücken
+
+        String expected = "0";// ergebnis ist 0
+        String actual = calc.readScreen(); //commit 1
+
+        assertEquals(expected, actual);
+    }
 
 }
 
