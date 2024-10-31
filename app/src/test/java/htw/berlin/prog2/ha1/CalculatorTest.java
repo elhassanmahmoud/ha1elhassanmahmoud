@@ -100,7 +100,7 @@ class CalculatorTest {
         calc.pressClearKey();// clear taste drücken
 
         String expected = "0";// ergebnis ist 0
-        String actual = calc.readScreen(); //commit 1
+        String actual = calc.readScreen(); //commit 1 -
 
         assertEquals(expected, actual);
     }
