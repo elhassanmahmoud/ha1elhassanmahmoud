@@ -128,7 +128,7 @@ class CalculatorTest {
         calc.pressUnaryOperationKey("1/x"); // 1/x taste drücken
 
         String expected = "Error"; // zeigt error an
-        String actual = calc.readScreen(); //commit 2 - 2/2
+        String actual = calc.readScreen(); //commit 2 - 2/2 p
 
         assertEquals(expected, actual);
     }
