@@ -91,7 +91,7 @@ class CalculatorTest {
 
     //TODO hier weitere Tests erstellen
     @Test
-    @DisplayName("soll den Bildschirm auf 0 zurücksetzen, wenn die Clear-Taste = 0 gedrückt wird")
+    @DisplayName ("soll den Bildschirm auf 0 zurücksetzen, wenn die Clear-Taste = 0 gedrückt wird")
     void testClearScreen() {
         Calculator calc = new Calculator();
 
@@ -105,7 +105,7 @@ class CalculatorTest {
         assertEquals(expected, actual);
     }
     @Test
-    @DisplayName("soll 'Error' anzeigen, wenn ein negativer Wert durch Null geteilt wird")
+    @DisplayName ("soll 'Error' anzeigen, wenn ein negativer Wert durch Null geteilt wird")
     void testNegativeDivisionByZero() {
         Calculator calc = new Calculator();
 
@@ -120,6 +120,17 @@ class CalculatorTest {
 
         assertEquals(expected, actual);
     }
+    @Test
+    @DisplayName ("soll 'Error' anzeigen, wenn 1/x ohne Ausgangswert berechnet wird")
+    void testInverseWithoutValue() {
+        Calculator calc = new Calculator();
+
+        calc.pressUnaryOperationKey("1/x"); // 1/x taste drücken
+
+        String expected = "Error"; // zeigt error an
+        String actual = calc.readScreen(); //commit 2 - 2/2
+
+        assertEquals(expected, actual);
+    }
 
 }
-
