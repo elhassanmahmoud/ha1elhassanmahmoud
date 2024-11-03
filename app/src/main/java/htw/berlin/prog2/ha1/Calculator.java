@@ -165,7 +165,7 @@ public class Calculator {
         }
         if (screen.contains(".") && screen.length() > 11) {
             screen = screen.substring(0, 10); // Begrenzung auf 10 Zeichen
-        } //commit 3 - p
+        } //commit 2-5 - 2 rote tests mit bugfixes
     }
 
 }
