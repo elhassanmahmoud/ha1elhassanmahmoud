@@ -72,19 +72,34 @@ public class Calculator {
      * @param operation "√" für Quadratwurzel, "%" für Prozent, "1/x" für Inversion
      */
     public void pressUnaryOperationKey(String operation) {
+        // Überprüfung: Bildschirmwertes null bevor ausgeführt (operation) wird
+        if (operation.equals("1/x") && screen.equals("0")) {
+            screen = "Error"; // Fehler bei Division durch null
+            return; // Methode verlassen
+        }
+
+        // Übernehmen des aktuellen Wertes und der Ausführung
         latestValue = Double.parseDouble(screen);
         latestOperation = operation;
-        var result = switch(operation) {
-            case "√" -> Math.sqrt(Double.parseDouble(screen));
-            case "%" -> Double.parseDouble(screen) / 100;
-            case "1/x" -> 1 / Double.parseDouble(screen);
-            default -> throw new IllegalArgumentException();
-        };
-        screen = Double.toString(result);
-        if(screen.equals("NaN")) screen = "Error";
-        if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
 
+        // die Durchführung der berechnungen
+        double result = switch (operation) {
+            case "√" -> Math.sqrt(latestValue);
+            case "%" -> latestValue / 100;
+            case "1/x" -> 1 / latestValue;
+            default -> throw new IllegalArgumentException("Ungültige Operation");
+        };
+
+        // Ergebnisses auf den Bildschirm setzen
+        screen = Double.toString(result);
+        if (screen.equals("NaN") || screen.equals("Infinity")) {
+            screen = "Error";
+        }
+        if (screen.contains(".") && screen.length() > 11) {
+            screen = screen.substring(0, 10); // Begrenzung auf 10 Zeichen
+        }
     }
+
 
     /**
      * Empfängt den Befehl der gedrückten Dezimaltrennzeichentaste, im Englischen üblicherweise "."
@@ -118,17 +133,39 @@ public class Calculator {
      * und das Ergebnis direkt angezeigt.
      */
     public void pressEqualsKey() {
-        var result = switch(latestOperation) {
-            case "+" -> latestValue + Double.parseDouble(screen);
-            case "-" -> latestValue - Double.parseDouble(screen);
-            case "x" -> latestValue * Double.parseDouble(screen);
-            case "/" -> latestValue / Double.parseDouble(screen);
-            default -> throw new IllegalArgumentException();
-        };
+        // Überprüfung - ob eine Operation ausgewählt wurde
+        if (latestOperation.isEmpty()) {
+            return; // Wenn keine Operation vorhanden ist passiert nichts
+        }
+
+        double result;
+        double divisor = Double.parseDouble(screen);
+
+        // Durchführung der Berechnung
+        switch(latestOperation) {
+            case "+" -> result = latestValue + divisor;
+            case "-" -> result = latestValue - divisor;
+            case "x" -> result = latestValue * divisor;
+            case "/" -> {
+                if (divisor == 0) {   // Division durch Null
+                    screen = "Error";
+                    return; // Methode verlassen
+                }
+                result = latestValue / divisor;
+            }
+            default -> throw new IllegalArgumentException("Ungültige Operation");
+        }
+
+        // Ergebnis auf den Bildschirm setzen
         screen = Double.toString(result);
-        if(screen.equals("Infinity")) screen = "Error";
-        if(screen.endsWith(".0")) screen = screen.substring(0,screen.length()-2);
-        if(screen.endsWith(".0")) screen = screen.substring(0,screen.length()-2);
-        if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0,10);
+
+        // Formatierung des Bildschirms
+        if (screen.endsWith(".0")) {
+            screen = screen.substring(0, screen.length() - 2); // Entfernt .0
+        }
+        if (screen.contains(".") && screen.length() > 11) {
+            screen = screen.substring(0, 10); // Begrenzung auf 10 Zeichen
+        } //commit 3 - 
     }
+
 }

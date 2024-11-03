@@ -109,11 +109,11 @@ class CalculatorTest {
     void testNegativeDivisionByZero() {
         Calculator calc = new Calculator();
 
-        calc.pressDigitKey(5);// 5 eingeben
-        calc.pressNegativeKey(); // 5- eingeben
-        calc.pressBinaryOperationKey("/");// geteilt
-        calc.pressDigitKey(0); // geteilt 0
-        calc.pressEqualsKey(); // ergebnis berechnen
+        calc.pressDigitKey(9);// 9 eingeben
+        calc.pressNegativeKey(); // -9 eingeben
+        calc.pressBinaryOperationKey("/");// geteilt eingeben
+        calc.pressDigitKey(0); // geteilt 0 eingeben
+        calc.pressEqualsKey(); // ergebnis berechnen = error
 
         String expected = "Error"; //zeigt error an
         String actual = calc.readScreen(); //commit 2 - 1/2 -
@@ -121,11 +121,12 @@ class CalculatorTest {
         assertEquals(expected, actual);
     }
     @Test
-    @DisplayName ("soll 'Error' anzeigen, wenn 1/x ohne Ausgangswert berechnet wird")
+    @DisplayName ("soll 'Error' ausgeben, wenn der Kehrwert von 0 ermittelt wird")
     void testInverseWithoutValue() {
         Calculator calc = new Calculator();
 
-        calc.pressUnaryOperationKey("1/x"); // 1/x taste drücken
+        calc.pressDigitKey(0); // 0 eingeben
+        calc.pressUnaryOperationKey("1/x"); // 1/x taste drücken = 1 durch 0 ist nicht definiert
 
         String expected = "Error"; // zeigt error an
         String actual = calc.readScreen(); //commit 2 - 2/2 p
